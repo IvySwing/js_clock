@@ -72,34 +72,30 @@
             const minuteHand = document.querySelector('.min-hand');
             const hourHand = document.querySelector('.hour-hand');
             
+            function stopJump(el, value){
+                if(value == 90){
+                    el.style.transition = 'none';
+                } else{
+                    el.style.transition = '';
+                }
+            }
+            
             function moveHands(){
                 const currentDate = new Date();
 
                 const seconds = currentDate.getSeconds();
-                const secondDegree = ((seconds/60) * 360) + 90;                
-                if(secondDegree == 90){
-                    secondHand.style.transition = 'none';
-                } else{
-                    secondHand.style.transition = '';
-                }                
+                const secondDegree = ((seconds/60) * 360) + 90;
+                stopJump(secondHand, secondDegree);
                 secondHand.style.transform = `rotate(${secondDegree}deg)`;
 
                 const minutes = currentDate.getMinutes();
                 const minuteDegree = ((minutes/60) * 360) + ((seconds/60) * 6) + 90;
-                if(minuteDegree == 90){
-                    minuteHand.style.transition = 'none';
-                } else{
-                    minuteHand.style.transition = '';
-                }                    
+                stopJump(minuteHand, minuteDegree);
                 minuteHand.style.transform = `rotate(${minuteDegree}deg)`;
 
                 const hours = currentDate.getHours();
                 const hourDegree = ((hours/12) * 360) + ((minutes/60) * 30) + 90;
-                if(hourDegree == 90){
-                    hourHand.style.transition = 'none';
-                } else{
-                    hourHand.style.transition = '';
-                }
+                stopJump(hourHand, hourDegree);
                 hourHand.style.transform = `rotate(${hourDegree}deg)`;
             }
             
